@@ -14,12 +14,18 @@
 4. TodoList : 할 일 목록을 보여주는 컴포넌트. TodoListItem을 담는 역할을 한다.
 
 ### 2) 기능
-1. 
+1. 할 일 작성 기능
+2. 할 일 삭제 기능
+3. 할 일 수정 기능
 
 ## 2. 사용 기술 및 라이브러리
+react
 1. create-react-app
 2. styled-components (npm i styled-components)
-3. react-icons (npm i react-icons) > https://react-icons.github.io/react-icons
+3. react-icons (npm i react-icons)
+
+Database - (예정)
+- firebase
 
 ## 3. github 규칙
 1. branch 네이밍 규칙 : "수정항목_구체적내용"  

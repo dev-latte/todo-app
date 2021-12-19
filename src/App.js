@@ -26,8 +26,7 @@ function App() {
 
   const nextId = useRef(4);
 
-  const onWriteTodo = useCallback(
-    text => {
+  const onWriteTodo = useCallback(text => {
       const item = {
         id: nextId.current,
         text,
@@ -38,11 +37,22 @@ function App() {
     }
   );
 
+  const onRemoveTodo = useCallback(id => {
+    setTodoList(todoList.filter(data => data.id !== id));
+  }, [todoList]);
+
+  const onToggleTodo = useCallback(id => {
+    setTodoList(
+      todoList.map(data => 
+        data.id === id ? { ...data, checked: !(data.checked) } : data
+      ),
+    );
+  }, [todoList]);
 
   return (
     <TodoListTemplate>
       <TodoListWrite onWriteTodo={onWriteTodo}/>
-      <TodoList todoList={todoList}/>
+      <TodoList todoList={todoList} onRemoveTodo={onRemoveTodo} onToggleTodo={onToggleTodo}/>
     </TodoListTemplate>
   );
 }

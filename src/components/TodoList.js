@@ -8,12 +8,18 @@ const TodoListTemplate = styled.div`
     overflow-y: auto;
 `;
 
-const TodoList = ({todoList}) => {
+const TodoList = ({todoList, onRemoveTodo, onToggleTodo}) => {
     return (
         <TodoListTemplate>
             {
                 todoList 
-                && todoList.map(data => <TodoListItem item={data} key={data.id}/>)
+                && todoList.map(data => 
+                    <TodoListItem 
+                        item={data} 
+                        key={data.id} 
+                        onRemoveTodo={onRemoveTodo}
+                        onToggleTodo={onToggleTodo}    
+                    />)
             }
         </TodoListTemplate>
     );
