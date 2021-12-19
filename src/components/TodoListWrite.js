@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import styled from "styled-components";
 import { MdAdd } from "react-icons/md";
 
@@ -37,10 +37,26 @@ const TodoListWriteForm = styled.form`
     }
 `;
 
-const TodoListWrite = () => {
+const TodoListWrite = ({onWriteTodo}) => {
+    const [value, setValue] = useState("");
+
+    const onChangeEvent = useCallback(e => {
+        setValue(e.target.value);
+    }, []);
+
+    const onSubmit = useCallback(e => {
+        onWriteTodo(value);
+        setValue("");
+        e.preventDefault(); // form 이벤트 방지
+    }, [onWriteTodo, value]);
+
     return (
-        <TodoListWriteForm>
-            <input placeholder="할 일을 입력하세요"/>
+        <TodoListWriteForm onSubmit={onSubmit}>
+            <input 
+                placeholder="할 일을 입력하세요"
+                value={value}
+                onChange={onChangeEvent}    
+            />
             <button type="submit">
                 <MdAdd/>
             </button>

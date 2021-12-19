@@ -8,13 +8,13 @@ const TodoListTemplate = styled.div`
     overflow-y: auto;
 `;
 
-const TodoList = () => {
+const TodoList = ({todoList}) => {
     return (
         <TodoListTemplate>
-            <TodoListItem/>
-            <TodoListItem/>
-            <TodoListItem/>
-            <TodoListItem/>
+            {
+                todoList 
+                && todoList.map(data => <TodoListItem item={data} key={data.id}/>)
+            }
         </TodoListTemplate>
     );
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { MdCheckBoxOutlineBlank, MdRemoveCircleOutline } from "react-icons/md";
+import { MdCheckBox, MdCheckBoxOutlineBlank, MdRemoveCircleOutline } from "react-icons/md";
 import styled from "styled-components";
 
 const TodoListItemTemplate = styled.div`
@@ -32,7 +32,7 @@ const TodoListCheckbox = styled.div`
         }
         span {
             color: #adb5bd;
-            texd-decoration: line-through;
+            text-decoration: line-through;
         }
     }
 `;
@@ -48,12 +48,13 @@ const TodolistRemoveBtn = styled.div`
     }
 `;
 
-const TodoListItem = () => {
+const TodoListItem = ({item}) => {
+    const {text, checked} = item;
     return (
         <TodoListItemTemplate>
-            <TodoListCheckbox>
-                <MdCheckBoxOutlineBlank/>
-                <span>할 일</span>
+            <TodoListCheckbox className={checked ? "checked" : ""}>
+                {checked ? <MdCheckBox/> : <MdCheckBoxOutlineBlank/> }
+                <span>{text}</span>
             </TodoListCheckbox>
             <TodolistRemoveBtn>
                 <MdRemoveCircleOutline/>
