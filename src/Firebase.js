@@ -22,5 +22,5 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 export const fbInstance = firebase;
-export const fbDbService = firebase.firestore();
+export const dbService = firebase.firestore();
 // export const analytics = firebase.getAnalytics();

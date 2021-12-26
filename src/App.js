@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { fbDbService } from './Firebase';
+import { useCallback, useEffect, useState } from 'react';
+import { dbService } from './Firebase';
 import './App.css';
 import TodoList from './components/TodoList';
 import TodoListTemplate from './components/TodoListTemplate';
@@ -7,6 +7,7 @@ import TodoListWrite from './components/TodoListWrite';
 
 function App() {
   const [todoList, setTodoList] = useState([]);
+  const [lastId, setLastId] = useState(0);
 
   useEffect(() => {
     console.log('loading...');
@@ -14,38 +15,63 @@ function App() {
   }, []);
 
   const getTodoList = async () => {
-    await fbDbService
+    await dbService
               .collection("todoItems")
               .orderBy('id', 'desc')
-              .get()
-              .then(response => {
+              .onSnapshot(response => {
                 if(0 < response.size) {
-                  setTodoList(response.docs.map(doc => doc.data()));
+                  setTodoList(response.docs
+                                        .map(doc => doc.data())
+                                        .filter(data => data.remove !== true)
+                              );
                   return;
                 }
                 console.log('데이터가 존재하지 않습니다.');
               });
   }
 
-  // 여기부터 작업 > id 키를 셋팅해주는 작업
-  const nextId = useRef(4);
+  useEffect(()=>{
+    if(0 < todoList.length) {
+      setLastId(todoList[0].id);
+    }
+  },[todoList]);
 
   const onWriteTodo = useCallback(text => {
-      console.log(text);
-      console.log(nextId);
       const item = {
-        id: nextId.current,
+        id: lastId+1,
         text,
-        checked: false
+        done: false,
+        remove: false
       }
-      setTodoList(todoList.concat(item));
-      nextId.current += 1;
+      addTodo(item);
     }
   );
 
-  const onRemoveTodo = useCallback(id => {
-    setTodoList(todoList.filter(data => data.id !== id));
-  }, [todoList]);
+  const addTodo = async (data) => {
+    await dbService
+              .collection("todoItems")
+              .add(data)
+              .then(() => {
+                console.log("Document successfully written!");
+              })
+              .catch(error => {
+                console.error("Error writing document: ", error);
+              });
+  }
+
+  const onRemoveTodo = (id) => {
+    // remove를 true로 업데이트하기
+    //  dbService
+    //         .collection("todoItems")
+    //         .doc()
+    //         .update()
+    //         .then(() => {
+    //           console.log("Document successfully remove!");
+    //         })
+    //         .catch(error => {
+    //           console.error("Error remove document: ", error);
+    //         });
+  };
 
   const onToggleTodo = useCallback(id => {
     setTodoList(
