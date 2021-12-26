@@ -1,32 +1,38 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { fbDbService } from './Firebase';
 import './App.css';
 import TodoList from './components/TodoList';
 import TodoListTemplate from './components/TodoListTemplate';
 import TodoListWrite from './components/TodoListWrite';
 
 function App() {
-  // 임시 데이터 셋팅
-  const [todoList, setTodoList] = useState([
-    {
-      id: 1,
-      text: '리액트의 기초 알아보기',
-      checked: true
-    },
-    {
-      id: 2,
-      text: '컴포넌트 스타일링 해보기',
-      checked: true
-    },
-    {
-      id: 3,
-      text: '일정 관리 앱 만들어 보기',
-      checked: false
-    }
-  ]);
+  const [todoList, setTodoList] = useState([]);
 
+  useEffect(() => {
+    console.log('loading...');
+    getTodoList();
+  }, []);
+
+  const getTodoList = async () => {
+    await fbDbService
+              .collection("todoItems")
+              .orderBy('id', 'desc')
+              .get()
+              .then(response => {
+                if(0 < response.size) {
+                  setTodoList(response.docs.map(doc => doc.data()));
+                  return;
+                }
+                console.log('데이터가 존재하지 않습니다.');
+              });
+  }
+
+  // 여기부터 작업 > id 키를 셋팅해주는 작업
   const nextId = useRef(4);
 
   const onWriteTodo = useCallback(text => {
+      console.log(text);
+      console.log(nextId);
       const item = {
         id: nextId.current,
         text,
