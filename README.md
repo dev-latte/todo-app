@@ -16,21 +16,23 @@
 ### 2) 기능
 1. 할 일 작성 기능
 2. 할 일 삭제 기능
-3. 할 일 수정 기능
+3. 할 일 체크 토글 기능
+4. 할 일 수정 기능 : 내용을 수정하는 것
 
 ## 2. 사용 기술 및 라이브러리
-react
-1. create-react-app
-2. styled-components (npm i styled-components)
-3. react-icons (npm i react-icons)
+react  
+1. create-react-app  
+2. styled-components (npm i styled-components)  
+3. react-icons (npm i react-icons)  
+4. redux (npm i react-redux)
 
-Database - (예정)
-- firebase
+Database
+- firebase (npm install firebase)
 
 ## 3. github 규칙
 1. branch 네이밍 규칙 : "수정항목_구체적내용"  
 `예) fix_styling_todolist_component` 
-2. commit 메시지 규칙 : "수정항목 > 구체적인내용 - 추가설명"
+2. commit 메시지 규칙 : "수정항목 > 구체적인내용 - 추가설명"  
 `예) add > Function of Insert Todo item`  
 
 [표1] 구체적인 수정 항목
