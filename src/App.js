@@ -21,8 +21,13 @@ function App() {
               .onSnapshot(response => {
                 if(0 < response.size) {
                   setTodoList(response.docs
-                                        .map(doc => doc.data())
-                                        .filter(data => data.remove !== true)
+                                        .map(doc => {
+                                          const object = {};
+                                          object.id = doc.id;
+                                          object.data = doc.data();
+                                          return object;
+                                        })
+                                        .filter(doc => doc.data.remove !== true)
                               );
                   return;
                 }
@@ -50,7 +55,8 @@ function App() {
   const addTodo = async (data) => {
     await dbService
               .collection("todoItems")
-              .add(data)
+              .doc()
+              .set(data)
               .then(() => {
                 console.log("Document successfully written!");
               })
@@ -59,26 +65,27 @@ function App() {
               });
   }
 
-  const onRemoveTodo = (id) => {
-    // remove를 true로 업데이트하기
-    //  dbService
-    //         .collection("todoItems")
-    //         .doc()
-    //         .update()
-    //         .then(() => {
-    //           console.log("Document successfully remove!");
-    //         })
-    //         .catch(error => {
-    //           console.error("Error remove document: ", error);
-    //         });
+  const onRemoveTodo = (docId) => {
+     dbService
+            .collection("todoItems")
+            .doc(docId)
+            .update({
+              remove: true
+            })
+            .then(() => {
+              console.log("Document successfully remove!");
+            })
+            .catch(error => {
+              console.error("Error remove document: ", error);
+            });
   };
 
   const onToggleTodo = useCallback(id => {
-    setTodoList(
-      todoList.map(data => 
-        data.id === id ? { ...data, checked: !(data.checked) } : data
-      ),
-    );
+    // setTodoList(
+    //   todoList.map(data => 
+    //     data.id === id ? { ...data, checked: !(data.checked) } : data
+    //   ),
+    // );
   }, [todoList]);
 
   return (

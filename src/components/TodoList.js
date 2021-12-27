@@ -13,10 +13,11 @@ const TodoList = ({todoList, onRemoveTodo, onToggleTodo}) => {
         <TodoListTemplate>
             {
                 todoList 
-                && todoList.map(data => 
-                    <TodoListItem 
-                        item={data} 
-                        key={data.id} 
+                && todoList.map(doc => 
+                    <TodoListItem
+                        key={doc.data.id} 
+                        docId={doc.id}
+                        item={doc.data} 
                         onRemoveTodo={onRemoveTodo}
                         onToggleTodo={onToggleTodo}    
                     />)
