@@ -81,12 +81,23 @@ function App() {
   };
 
   const onToggleTodo = useCallback(id => {
-    // setTodoList(
-    //   todoList.map(data => 
-    //     data.id === id ? { ...data, checked: !(data.checked) } : data
-    //   ),
-    // );
+    const currentTodo = todoList.filter(data => data.data.id === id)[0];
+
+    dbService
+          .collection("todoItems")
+          .doc(currentTodo.id)
+          .update({
+            done: !currentTodo.data.done
+          })
+          .then(() => {
+            console.log("done!!");
+          })
+          .catch(error => {
+            console.error("Error done update document: ", error);
+          });
   }, [todoList]);
+
+  // 추가내용 > 기존에 있던 텍스트 수정해서 업데이트하기
 
   return (
     <TodoListTemplate>

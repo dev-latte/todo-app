@@ -49,7 +49,6 @@ const TodolistRemoveBtn = styled.div`
 `;
 
 const TodoListItem = ({docId, item, onRemoveTodo, onToggleTodo}) => {
-    console.log(item);
     const {id, text, done} = item;
     return (
         <TodoListItemTemplate>
