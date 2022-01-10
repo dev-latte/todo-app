@@ -2,10 +2,11 @@
 ## 1. 목표
 
 ### 1) 디자인
-[사진1] 일정 관리 웹 애플리케이션 최종 디자인  
+[사진1] 일정 관리 웹 애플리케이션 - 최종 디자인(예상)  
 <img src="./public/images/todo-app-result.png" width="80%" title="application_result"/>
+
 #### 컴포넌트 구성  
-[사진2] 컴포넌트 구성  
+[사진2] 일정 관리 웹 애플리케이션 - 컴포넌트 구성  
 <img src="./public/images/todo-app-result-component.png" width="80%" title="application_component"/>
 
 1. TodoListTemplate : 화면을 가운데로 정렬시켜주며, 앱 타이틀을 보여준다.
@@ -13,11 +14,18 @@
 3. TodoListItem : 하나의 할 일을 보여주는 컴포넌트.
 4. TodoList : 할 일 목록을 보여주는 컴포넌트. TodoListItem을 담는 역할을 한다.
 
+#### 디자인 추가 요소  
+[사진3] 일정 관리 웹 애플리케이션 - 수정 기능 아이콘 추가
+<img src="./public/images/todo-app-add-icons.png" width="80%" title="application_result"/>
+
+[사진4] 일정 관리 웹 애플리케이션 - 수정 기능 아이콘을 클릭했을 경우, 수정 가능한 폼이 등장한다.
+<img src="./public/images/todo-app-add-function-of-edit.png" width="80%" title="application_result"/>
+
 ### 2) 기능
 1. 할 일 작성 기능
 2. 할 일 삭제 기능
 3. 할 일 체크 토글 기능
-4. 할 일 수정 기능 : 내용을 수정하는 것
+4. 할 일 수정 기능 - 작성된 내용을 수정
 
 ## 2. 사용 기술 및 라이브러리
 react  

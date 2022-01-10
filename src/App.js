@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 import { dbService } from './Firebase';
-import './App.css';
 import TodoList from './components/TodoList';
 import TodoListTemplate from './components/TodoListTemplate';
 import TodoListWrite from './components/TodoListWrite';
+import './App.css';
 
 function App() {
   const [todoList, setTodoList] = useState([]);
@@ -66,6 +66,8 @@ function App() {
   }
 
   const onRemoveTodo = (docId) => {
+    if(!window.confirm("정말로 삭제하시겠습니까?")) return;
+
      dbService
             .collection("todoItems")
             .doc(docId)
@@ -97,12 +99,23 @@ function App() {
           });
   }, [todoList]);
 
-  // 추가내용 > 기존에 있던 텍스트 수정해서 업데이트하기
+  const onUpdateTodo = (docId, data) => {
+     dbService
+            .collection("todoItems")
+            .doc(docId)
+            .update(data)
+            .then(() => {
+              console.log("Document successfully update!");
+            })
+            .catch(error => {
+              console.error("Error update document: ", error);
+            });
+  };
 
   return (
     <TodoListTemplate>
       <TodoListWrite onWriteTodo={onWriteTodo}/>
-      <TodoList todoList={todoList} onRemoveTodo={onRemoveTodo} onToggleTodo={onToggleTodo}/>
+      <TodoList todoList={todoList} onRemoveTodo={onRemoveTodo} onToggleTodo={onToggleTodo} onUpdateTodo={onUpdateTodo}/>
     </TodoListTemplate>
   );
 }

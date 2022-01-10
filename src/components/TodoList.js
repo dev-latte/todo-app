@@ -8,7 +8,7 @@ const TodoListTemplate = styled.div`
     overflow-y: auto;
 `;
 
-const TodoList = ({todoList, onRemoveTodo, onToggleTodo}) => {
+const TodoList = ({todoList, onRemoveTodo, onToggleTodo, onUpdateTodo}) => {
     return (
         <TodoListTemplate>
             {
@@ -19,7 +19,8 @@ const TodoList = ({todoList, onRemoveTodo, onToggleTodo}) => {
                         docId={doc.id}
                         item={doc.data} 
                         onRemoveTodo={onRemoveTodo}
-                        onToggleTodo={onToggleTodo}    
+                        onToggleTodo={onToggleTodo} 
+                        onUpdateTodo={onUpdateTodo}   
                     />)
             }
         </TodoListTemplate>

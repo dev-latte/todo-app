@@ -1,5 +1,5 @@
-import React from "react";
-import { MdCheckBox, MdCheckBoxOutlineBlank, MdRemoveCircleOutline } from "react-icons/md";
+import React, { useState } from "react";
+import { MdCheckBox, MdCheckBoxOutlineBlank, MdRemoveCircleOutline, MdOutlineEdit, MdEdit } from "react-icons/md";
 import styled from "styled-components";
 
 const TodoListItemTemplate = styled.div`
@@ -35,6 +35,29 @@ const TodoListCheckbox = styled.div`
             text-decoration: line-through;
         }
     }
+    input[type=text] {
+        width: 90%;
+        height: 19px;
+        border: none;
+        outline: none;
+        border-bottom: 1px solid #adb5bd;
+        margin-left: 0.5rem;
+        font-size: 1rem;
+        background-color: transparent;
+        color: #dee2e6;
+    }
+
+`;
+
+const TodolistEditBtn = styled.div`
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    color: #000;
+    cursor: pointer;
+    &:hover {
+        color: #ff8787;
+    }
 `;
 
 const TodolistRemoveBtn = styled.div`
@@ -48,17 +71,39 @@ const TodolistRemoveBtn = styled.div`
     }
 `;
 
-const TodoListItem = ({docId, item, onRemoveTodo, onToggleTodo}) => {
+const TodoListItem = ({docId, item, onRemoveTodo, onToggleTodo, onUpdateTodo}) => {
     const {id, text, done} = item;
+    const [edit, setEdit] = useState(false);
+    const [editText, setEditText] = useState(text);
+
+    const onChangeEdit = (e) => {
+        setEditText(e.target.value);
+    }
+
     return (
         <TodoListItemTemplate>
-            <TodoListCheckbox className={done ? "checked" : ""} onClick={() => onToggleTodo(id)}>
-                {done ? <MdCheckBox/> : <MdCheckBoxOutlineBlank/> }
-                <span>{text}</span>
-            </TodoListCheckbox>
-            <TodolistRemoveBtn onClick={() => onRemoveTodo(docId)}>
-                <MdRemoveCircleOutline/>
-            </TodolistRemoveBtn>
+            { edit ?
+                // checkbox 랑 input&test랑 컴포넌트 나누기
+                <TodoListCheckbox className={done ? "checked" : ""}>
+                    {done ? <MdCheckBox/> : <MdCheckBoxOutlineBlank/> }
+                    <input type="text" value={editText} onChange={onChangeEdit}/>
+                </TodoListCheckbox>
+            :
+                <TodoListCheckbox className={done ? "checked" : ""} onClick={() => onToggleTodo(id)}>
+                    {done ? <MdCheckBox/> : <MdCheckBoxOutlineBlank/> }
+                    <span>{text}</span>
+                </TodoListCheckbox>   
+            }
+
+            <TodolistEditBtn className={edit ? "editable" : ""} onClick={() => setEdit(!edit)}>
+                {edit ? <MdEdit onClick={() => onUpdateTodo(docId, {...item, text:editText})}/> : <MdOutlineEdit/>}
+            </TodolistEditBtn>
+
+            { !edit && 
+                <TodolistRemoveBtn onClick={() => onRemoveTodo(docId)}>
+                    <MdRemoveCircleOutline/>
+                </TodolistRemoveBtn>
+            }
         </TodoListItemTemplate>
     );
 }
