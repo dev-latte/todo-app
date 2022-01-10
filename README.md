@@ -32,8 +32,6 @@ react
 1. create-react-app  
 2. styled-components (npm i styled-components)  
 3. react-icons (npm i react-icons)  
-4. redux (npm i react-redux)
-5. Redex DevTools Extension's helper (npm i redux-devtools-extension)
 
 Database
 - firebase (npm install firebase)
